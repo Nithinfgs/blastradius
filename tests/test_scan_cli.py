@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -48,7 +49,7 @@ def test_installed_version_with_timing(feed, home: Path, monkeypatch, stamp, exp
     make_dist(site, "Evil_Pkg", "1.107.0")
     f = by_kind(run(feed, home), "installed")[0]
     assert f.severity == "high" and f.timing == expected
-    assert f.package == "evil-pkg" and "proj/.venv" in f.path
+    assert f.package == "evil-pkg" and os.path.join("proj", ".venv") in f.path
 
 
 def test_other_version_not_flagged(feed, home: Path):
